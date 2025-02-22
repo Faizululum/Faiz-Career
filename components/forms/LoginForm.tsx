@@ -28,7 +28,7 @@ const LoginForm = async () => {
                     "use server";
 
                     await signIn("google", {
-                        redirectTo: "/",
+                        redirectTo: "/onboarding",
                     })
                 }}>
                     <GeneralSubmitButton text="Login with Google" variant="outline" width="w-full" icon={<Google />} />
@@ -37,7 +37,7 @@ const LoginForm = async () => {
                     "use server";
 
                     await signIn("github", {
-                        redirectTo: "/",
+                        redirectTo: "/onboarding",
                     })
                 }}>
                     <GeneralSubmitButton text="Login with GitHub" variant="outline" width="w-full" icon={<Github />} />
