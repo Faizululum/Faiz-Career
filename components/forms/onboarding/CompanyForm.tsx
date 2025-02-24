@@ -165,7 +165,6 @@ const CompanyForm = () => {
                 </FormItem>
               )}
             />
-
             <Button type="submit" className="w-full" disabled={pending}>
               {pending ? "Submitting..." : "Continue"}
             </Button>
