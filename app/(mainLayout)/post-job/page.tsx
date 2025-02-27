@@ -1,4 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
+import CreateJobForm from '@/components/forms/CreateJobForm';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import Logo1 from "@/public/company-1.png";
 import Logo2 from "@/public/company-2.jpg";
@@ -44,9 +45,7 @@ const PostJobPage = () => {
   return (
     <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 mt-5">
         <Card className="col-span-1 md:col-span-2">
-            <CardHeader>
-                <CardTitle>This is form</CardTitle>
-            </CardHeader>
+            <CreateJobForm />            
         </Card>
 
         <div className="col-span-1">
