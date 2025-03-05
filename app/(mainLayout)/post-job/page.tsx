@@ -44,9 +44,7 @@ const stats = [
 const PostJobPage = () => {
   return (
     <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 mt-5">
-        <Card className="col-span-1 md:col-span-2">
-            <CreateJobForm />            
-        </Card>
+        <CreateJobForm />
 
         <div className="col-span-1">
             <Card>
