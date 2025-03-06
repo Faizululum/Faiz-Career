@@ -10,6 +10,7 @@ import { Input } from "../ui/input";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "../ui/select";
 import { cityList } from "@/app/utils/citiesList";
 import SalaryRangeSelector from "../general/SalaryRangeSelector";
+import JobDescriptionEditor from "../richTextEditor.tsx/JobDescriptionEditor";
 
 const CreateJobForm = () => {
 
@@ -122,6 +123,20 @@ const CreateJobForm = () => {
                 </FormControl>
               </FormItem>
             </div>
+
+            <FormField 
+              control={form.control}
+              name="jobDescription"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Job Description</FormLabel>
+                  <FormControl>
+                    <JobDescriptionEditor />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </CardContent>
         </Card>
       </form>
