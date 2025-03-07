@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useForm } from "react-hook-form";
@@ -11,6 +12,7 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrig
 import { cityList } from "@/app/utils/citiesList";
 import SalaryRangeSelector from "../general/SalaryRangeSelector";
 import JobDescriptionEditor from "../richTextEditor.tsx/JobDescriptionEditor";
+import BenefitsSelector from "../general/BenefitsSelector";
 
 const CreateJobForm = () => {
 
@@ -131,7 +133,21 @@ const CreateJobForm = () => {
                 <FormItem>
                   <FormLabel>Job Description</FormLabel>
                   <FormControl>
-                    <JobDescriptionEditor />
+                    <JobDescriptionEditor field={field as any} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField 
+              control={form.control}
+              name="benefits"
+              render={({field}) => (
+                <FormItem>
+                  <FormLabel>Benefits</FormLabel>
+                  <FormControl>
+                    <BenefitsSelector field={field as any} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
