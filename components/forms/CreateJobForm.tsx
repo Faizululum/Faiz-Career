@@ -18,8 +18,18 @@ import Image from "next/image";
 import { XIcon } from "lucide-react";
 import { UploadDropzone } from "../general/UploadThingReexported";
 import { Button } from "../ui/button";
+import JobListingSelector from "../general/JobListingSelector";
 
-const CreateJobForm = () => {
+interface iAppProps {
+  companyLocation: string;
+  companyName: string;
+  companyAbout: string;
+  companyLogo: string;
+  companyWebsite: string | null;
+  companyLinkedin: string | null;
+}
+
+const CreateJobForm = ({ companyLocation, companyName, companyAbout, companyLogo, companyWebsite, companyLinkedin }: iAppProps) => {
 
   const form = useForm<z.infer<typeof jobPostSchema>>({
     resolver: zodResolver(jobPostSchema),
@@ -38,10 +48,14 @@ const CreateJobForm = () => {
       salaryFrom: 0,
       salaryTo: 0,
     }
-  })
+  });
+
+  async function onSubmit(values: z.infer<typeof jobPostSchema>) {
+    
+  }
   return (
     <Form {...form}>
-      <form className="col-span-1 lg:col-span-2 flex flex-col gap-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="col-span-1 lg:col-span-2 flex flex-col gap-8">
         <Card>
           <CardHeader>
             <CardTitle>Job Information</CardTitle>
@@ -176,6 +190,7 @@ const CreateJobForm = () => {
                     <FormControl>
                       <Input placeholder="Company Name..." {...field} />
                     </FormControl>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -222,6 +237,7 @@ const CreateJobForm = () => {
                     <FormControl>
                       <Input placeholder="Company Website" {...field} />
                     </FormControl>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -247,6 +263,7 @@ const CreateJobForm = () => {
                     <FormControl>
                       <Textarea placeholder="Say something about your company" {...field} className="min-h-[120px]" />
                     </FormControl>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -285,6 +302,32 @@ const CreateJobForm = () => {
             />
           </CardContent>
         </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Job Listing Duration</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <FormField 
+              control={form.control}
+              name="listingDuration"
+              render={({field}) => (
+                <FormItem>
+                  <FormControl>
+                    <JobListingSelector 
+                      field={field as any}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </CardContent>
+        </Card>
+
+        <Button type="submit" className="w-full">
+          Post Job
+        </Button>
       </form>
     </Form>
   )

@@ -1,4 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
+import { prisma } from '@/app/utils/db';
+import { requireUser } from '@/app/utils/requireUser';
 import CreateJobForm from '@/components/forms/CreateJobForm';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import Logo1 from "@/public/company-1.png";
@@ -6,6 +8,7 @@ import Logo2 from "@/public/company-2.jpg";
 import Logo3 from "@/public/company-3.png";
 import Logo4 from "@/public/company-4.jpg";
 import Image from 'next/image';
+import { redirect } from 'next/navigation';
 
 const companies = [
     {id: 1, name: "Company 1", logo: Logo1},
@@ -41,10 +44,41 @@ const stats = [
     {id: 4, value: "500+", label: "Company hiring remotely"},
 ]
 
-const PostJobPage = () => {
+async function getCompany(userId: string) {
+    const data = await prisma.company.findUnique({
+        where: {
+            userId: userId,
+        },
+        select: {
+            name: true,
+            location: true,
+            about: true,
+            logo: true,
+            website: true,
+            linkedin: true,
+        }
+    });
+
+    if (!data) {
+        return redirect("/");
+    }
+
+    return data;    
+}
+
+const PostJobPage = async () => {
+    const session = await requireUser();
+    const data = await getCompany(session.id as string);
   return (
     <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 mt-5">
-        <CreateJobForm />
+        <CreateJobForm 
+            companyLocation={data.location}
+            companyName={data.name}
+            companyAbout={data.about}
+            companyLogo={data.logo}
+            companyWebsite={data.website}
+            companyLinkedin={data.linkedin}
+        />
 
         <div className="col-span-1">
             <Card>
