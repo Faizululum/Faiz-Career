@@ -19,6 +19,8 @@ import { XIcon } from "lucide-react";
 import { UploadDropzone } from "../general/UploadThingReexported";
 import { Button } from "../ui/button";
 import JobListingSelector from "../general/JobListingSelector";
+import { createJob } from "@/app/actions";
+import { useState } from "react";
 
 interface iAppProps {
   companyLocation: string;
@@ -35,11 +37,12 @@ const CreateJobForm = ({ companyLocation, companyName, companyAbout, companyLogo
     resolver: zodResolver(jobPostSchema),
     defaultValues: {
       benefits: [],
-      companyAbout: "",
-      companyLogo: "",
-      companyLocation: "",
-      companyName: "",
-      companyWebsite: "",
+      companyAbout: companyAbout,
+      companyLogo: companyLogo,
+      companyLocation: companyLocation,
+      companyName: companyName,
+      companyWebsite: companyWebsite || "",
+      companyLinkedin: companyLinkedin || "",
       employmentType: "",
       jobDescription: "",
       jobTitle: "",
@@ -50,12 +53,23 @@ const CreateJobForm = ({ companyLocation, companyName, companyAbout, companyLogo
     }
   });
 
+  const [pending, setPending] = useState(false);
+
   async function onSubmit(values: z.infer<typeof jobPostSchema>) {
-    
+    try {
+      setPending(true);
+      await createJob(values);
+    } catch (error) {
+      if (error instanceof Error && error.message !== "NEXT_REDIRECT") {
+        console.log("Something went wrong");
+      }
+    } finally {
+      setPending(false);
+    }
   }
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="col-span-1 lg:col-span-2 flex flex-col gap-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="col-span-1 lg:col-span-2 flex flex-col gap-8 pb-8">
         <Card>
           <CardHeader>
             <CardTitle>Job Information</CardTitle>
@@ -325,8 +339,8 @@ const CreateJobForm = ({ companyLocation, companyName, companyAbout, companyLogo
           </CardContent>
         </Card>
 
-        <Button type="submit" className="w-full">
-          Post Job
+        <Button type="submit" className="w-full" disabled={pending}>
+          {pending ? "Submitting..." : "Create Job Post"}
         </Button>
       </form>
     </Form>
