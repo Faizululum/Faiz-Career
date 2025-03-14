@@ -9,6 +9,14 @@ interface iAppProps {
   field: ControllerRenderProps;
 }
 
+const formatRupiah = (value: number) => {
+    return new Intl.NumberFormat("id-ID", {
+        style: "currency",
+        currency: "IDR",
+        minimumFractionDigits: 0,
+    }).format(value);
+}
+
 const JobListingSelector = ({ field }: iAppProps) => {
   return (
     <RadioGroup
@@ -33,8 +41,8 @@ const JobListingSelector = ({ field }: iAppProps) => {
                                     <p className="text-muted-foreground text-sm">{duration.description}</p>
                                 </div>
                                 <div className="text-right">
-                                    <p className="font-bold text-xl">Rp.{duration.price}</p>
-                                    <p className="text-muted-foreground text-sm">Rp.{(duration.price / duration.days).toFixed(2)}/days</p>
+                                    <p className="font-bold text-xl">{formatRupiah(duration.price)}</p>
+                                    <p className="text-muted-foreground text-sm">{formatRupiah(duration.price / duration.days)}/days</p>
                                 </div>
                             </div>
                         </Card>
