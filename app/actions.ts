@@ -7,6 +7,8 @@ import { prisma } from "./utils/db";
 import { redirect } from "next/navigation";
 import arcjet, { detectBot, shield } from "./utils/arcjet";
 import { request } from "@arcjet/next";
+import { stripe } from "./utils/stripe";
+import { jobListDurationPricing } from "./utils/jobListDurationPricing";
 
 const aj = arcjet
 .withRule(
@@ -101,11 +103,37 @@ export async function createJob(data: z.infer<typeof jobPostSchema>) {
         },
         select: {
             id: true,
+            user: {
+                select: {
+                    stripeCustomerId: true,
+                }
+            }
         }
     })
 
     if (!company?.id) {
         return redirect("/");
+    }
+
+    let stripeCustomerId = company.user.stripeCustomerId;
+
+    if (!stripeCustomerId) {
+        const customer = await stripe.customers.create({
+            email: user.email as string,
+            name: user.name as string,
+        });
+
+        stripeCustomerId = customer.id;
+
+        // Update the user with the stripe customer id
+        await prisma.user.update({
+            where: {
+                id: user.id,
+            },
+            data: {
+                stripeCustomerId: stripeCustomerId,
+            }
+        })
     }
 
     await prisma.jobPost.create({
@@ -122,5 +150,36 @@ export async function createJob(data: z.infer<typeof jobPostSchema>) {
         }
     });
 
-    return redirect("/");
+    const pricingTier = jobListDurationPricing.find(
+        (tier) => tier.days === validateData.listingDuration
+    );
+
+    if (!pricingTier) {
+        throw new Error("Invalid listing duration");
+    }
+
+    const session = await stripe.checkout.sessions.create({
+        customer: stripeCustomerId,
+        line_items: [
+            {
+                price_data: {
+                    product_data: {
+                        name: `Job Posting - ${pricingTier.days} Days`,
+                        description: pricingTier.description,
+                        images: [
+                            "https://7i4l3odgnr.ufs.sh/f/E0kXuBVtaL9n4JRNwaSjOPnBhmVCM1pDXitFoagrLqIcfEJs",
+                        ]
+                    },
+                    currency: "IDR",
+                    unit_amount: pricingTier.price,
+                },
+                quantity: 1,
+            },
+        ],
+        mode: "payment",
+        success_url: `${process.env.NEXT_PUBLIC_URL}/payment/success`,
+        cancel_url: `${process.env.NEXT_PUBLIC_URL}/payment/cancel`,
+    })
+
+    return redirect(session.url as string);
 }
