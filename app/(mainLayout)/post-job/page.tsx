@@ -116,7 +116,7 @@ const PostJobPage = async () => {
                     </div>
                 </CardContent>
             </Card>
-        </div>      
+        </div>
     </div>
   )
 }
