@@ -136,7 +136,7 @@ export async function createJob(data: z.infer<typeof jobPostSchema>) {
         })
     }
 
-    await prisma.jobPost.create({
+    const jobpost = await prisma.jobPost.create({
         data: {
             jobDescription: validateData.jobDescription,
             jobTitle: validateData.jobTitle,
@@ -147,6 +147,9 @@ export async function createJob(data: z.infer<typeof jobPostSchema>) {
             benefits: validateData.benefits,
             listingDuration: validateData.listingDuration,
             companyId: company.id,
+        },
+        select: {
+            id: true,
         }
     });
 
@@ -176,6 +179,9 @@ export async function createJob(data: z.infer<typeof jobPostSchema>) {
                 quantity: 1,
             },
         ],
+        metadata: {
+            jobId: jobpost.id,
+        },
         mode: "payment",
         success_url: `${process.env.NEXT_PUBLIC_URL}/payment/success`,
         cancel_url: `${process.env.NEXT_PUBLIC_URL}/payment/cancel`,
