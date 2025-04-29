@@ -7,7 +7,7 @@ import { Separator } from "../ui/separator";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "../ui/select";
 import { cityList } from "@/app/utils/citiesList";
 
-const jobTypes = ["full-time", "part-time", "remote", "freelance", "internship", "contract"];
+const jobTypes = ["full-time", "part-time", "freelance", "internship", "contract"];
 
 export default function JobFilter() {
     return (

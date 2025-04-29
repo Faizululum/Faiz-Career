@@ -2,24 +2,23 @@ interface Benefit {
     id: string;
     label: string;
     icon: React.ReactNode;
-}
-
-export const benefits: Benefit[] = [
-    { id: "remote", label: "Remote", icon: <span className="text-green-500">🌐</span> },
-    { id: "flexible-schedule", label: "Flexible Schedule", icon: <span className="text-green-500">📅</span> },
-    { id: "work-from-home", label: "Work From Home", icon: <span className="text-green-500">🏠</span> },
-    { id: "on-site", label: "On Site", icon: <span className="text-green-500">🏢</span> },
-    { id: "telecommuting", label: "Telecommuting", icon: <span className="text-green-500">💻</span> },
-    { id: "no-commute", label: "No Commute", icon: <span className="text-green-500">🚗</span> },
-    { id: "child-care", label: "Child Care", icon: <span className="text-green-500">👶</span> },
-    { id: "pet-friendly", label: "Pet Friendly", icon: <span className="text-green-500">🐶</span> },
-    { id: "health-insurance", label: "Health Insurance", icon: <span className="text-green-500">💉</span> },
-    { id: "vision-insurance", label: "Vision Insurance", icon: <span className="text-green-500">🌃</span> },
-    { id: "life-insurance", label: "Life Insurance", icon: <span className="text-green-500">💛</span> },
-    { id: "disability-insurance", label: "Disability Insurance", icon: <span className="text-green-500">🎩</span> },
-    { id: "paid-time-off", label: "Paid Time Off", icon: <span className="text-green-500">🏃‍♀️</span> },
-    { id: "retirement-plan", label: "Retirement Plan", icon: <span className="text-green-500">💰</span> },
-    { id: "401k", label: "401k", icon: <span className="text-green-500">💰</span> },
-    { id: "medical-insurance", label: "Medical Insurance", icon: <span className="text-green-500">🏥</span> },
-    { id: "dental-insurance", label: "Dental Insurance", icon: <span className="text-green-500">💊</span> }
-]
+  }
+  
+  export const benefits: Benefit[] = [
+    { id: "remote", label: "Remote Work", icon: <span className="text-green-500">🌐</span> },
+    { id: "hybrid", label: "Hybrid Work", icon: <span className="text-green-500">🏠</span> },
+    { id: "bpjs-health", label: "BPJS Kesehatan", icon: <span className="text-green-500">🏥</span> },
+    { id: "bpjs-employment", label: "BPJS Ketenagakerjaan", icon: <span className="text-green-500">🛡️</span> },
+    { id: "insurance-private", label: "Asuransi Swasta", icon: <span className="text-green-500">💉</span> },
+    { id: "thr", label: "THR (Tunjangan Hari Raya)", icon: <span className="text-green-500">🎁</span> },
+    { id: "bonus", label: "Bonus Kinerja", icon: <span className="text-green-500">💰</span> },
+    { id: "paid-leave", label: "Cuti Tahunan", icon: <span className="text-green-500">🏖️</span> },
+    { id: "career-path", label: "Jenjang Karir", icon: <span className="text-green-500">🚀</span> },
+    { id: "training", label: "Pelatihan dan Kursus", icon: <span className="text-green-500">🎓</span> },
+    { id: "transport-allowance", label: "Tunjangan Transportasi", icon: <span className="text-green-500">🚗</span> },
+    { id: "meal-allowance", label: "Tunjangan Makan", icon: <span className="text-green-500">🍱</span> },
+    { id: "laptop", label: "Fasilitas Laptop", icon: <span className="text-green-500">💻</span> },
+    { id: "overtime-pay", label: "Uang Lembur", icon: <span className="text-green-500">⏰</span> },
+    { id: "maternity-leave", label: "Cuti Melahirkan", icon: <span className="text-green-500">👶</span> },
+  ];
+  
