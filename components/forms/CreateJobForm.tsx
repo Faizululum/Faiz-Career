@@ -107,7 +107,6 @@ const CreateJobForm = ({ companyLocation, companyName, companyAbout, companyLogo
                           <SelectItem value="full-time">Full Time</SelectItem>
                           <SelectItem value="part-time">Part Time</SelectItem>
                           <SelectItem value="contract">Contract</SelectItem>
-                          <SelectItem value="remote">Remote</SelectItem>
                           <SelectItem value="internship">Internship</SelectItem>
                           <SelectItem value="freelance">Freelance</SelectItem>
                         </SelectGroup>
