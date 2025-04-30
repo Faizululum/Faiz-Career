@@ -291,7 +291,7 @@ const CreateJobForm = ({ companyLocation, companyName, companyAbout, companyLogo
                     <div>
                       {field.value ? (
                         <div className="relative w-fit">
-                          <Image src={field.value} alt="company logo" width={100} height={100} className="rounded-lg" />
+                          <Image src={field.value} alt="company logo" width={100} height={100} className="object-contain" />
                           <Button type="button" variant="destructive" size="icon" className="absolute -top-2 -right-2" onClick={() => field.onChange("")}>
                             <XIcon className="size-4"/>
                           </Button>

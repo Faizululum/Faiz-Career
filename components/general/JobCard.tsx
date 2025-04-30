@@ -36,7 +36,7 @@ const JobCard = ({ job }: iAppProps) => {
                 alt={job.Company.name}
                 width={64}
                 height={64}
-                className="size-16 rounded-lg"
+                className="size-16 object-contain"
               />
             </div>
             <div>
@@ -60,7 +60,7 @@ const JobCard = ({ job }: iAppProps) => {
                 </span>
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm">
                   {formatCurrency(job.salaryFrom)} -{" "}
                   {formatCurrency(job.salaryTo)}
                 </p>
