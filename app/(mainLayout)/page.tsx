@@ -1,4 +1,3 @@
-
 import JobFilter from "@/components/general/JobFilters";
 import JobListings from "@/components/general/JobListings";
 
