@@ -1,5 +1,5 @@
 import Navbar from '@/components/general/Navbar'
-import React, { ReactNode } from 'react'
+import { ReactNode } from 'react'
 
 const MainLayout = ({children}: {children: ReactNode}) => {
   return (
