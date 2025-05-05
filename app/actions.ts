@@ -10,6 +10,7 @@ import { request } from "@arcjet/next";
 import { stripe } from "./utils/stripe";
 import { jobListDurationPricing } from "./utils/jobListDurationPricing";
 import { inngest } from "./utils/inngest/client";
+import { revalidatePath } from "next/cache";
 
 const aj = arcjet
 .withRule(
@@ -126,7 +127,6 @@ export async function createJob(data: z.infer<typeof jobPostSchema>) {
 
         stripeCustomerId = customer.id;
 
-        // Update the user with the stripe customer id
         await prisma.user.update({
             where: {
                 id: user.id,
@@ -197,4 +197,47 @@ export async function createJob(data: z.infer<typeof jobPostSchema>) {
     })
 
     return redirect(session.url as string);
+}
+
+export async function saveJobPost(jobId: string) {
+    const user = await requireUser();
+
+    const req = await request();
+    const decision = await aj.protect(req);
+
+    if (decision.isDenied()) {
+        throw new Error("Forbidden");
+    }
+
+    await prisma.saveJobPost.create({
+        data: {
+            jobPostId: jobId,
+            userId: user.id as string,
+        }
+    });
+
+    revalidatePath(`/job/${jobId}`);
+}
+
+export async function unSaveJobPost(saveJobPostId: string) {
+    const user = await requireUser();
+
+    const req = await request();
+    const decision = await aj.protect(req);
+
+    if (decision.isDenied()) {
+        throw new Error("Forbidden");
+    }
+
+    const data = await prisma.saveJobPost.delete({
+        where: {
+            id: saveJobPostId,
+            userId: user.id,
+        },
+        select: {
+            jobPostId: true,
+        }
+    });
+
+    revalidatePath(`/job/${data.jobPostId}`);
 }
