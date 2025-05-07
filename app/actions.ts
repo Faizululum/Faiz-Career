@@ -132,7 +132,7 @@ export async function createJob(data: z.infer<typeof jobPostSchema>) {
                 id: user.id,
             },
             data: {
-                stripeCustomerId: stripeCustomerId,
+                stripeCustomerId: customer.id,
             }
         })
     }
@@ -166,7 +166,7 @@ export async function createJob(data: z.infer<typeof jobPostSchema>) {
         name: "job/created",
         data: {
             jobId: jobpost.id,
-            exparationDays: validateData.listingDuration,
+            expirationDays: validateData.listingDuration,
         }
     })
 
@@ -269,6 +269,35 @@ export async function editJobPost(data: z.infer<typeof jobPostSchema>, jobId: st
             salaryTo: validateData.salaryTo,
             jobDescription: validateData.jobDescription,
             benefits: validateData.benefits,
+        }
+    });
+
+    return redirect("/my-jobs");
+}
+
+export async function deleteJobPost(jobId: string) {
+    const user = await requireUser();
+
+    const req = await request();
+    const decision = await aj.protect(req);
+
+    if (decision.isDenied()) {
+        throw new Error("Forbidden");
+    }
+
+    await prisma.jobPost.delete({
+        where: {
+            id: jobId,
+            Company: {
+                userId: user.id,
+            },
+        },
+    });
+
+    await inngest.send({
+        name: "job/cancel.expiration",
+        data: {
+            jobId: jobId,
         }
     });
 
