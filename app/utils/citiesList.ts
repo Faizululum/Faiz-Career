@@ -38,5 +38,15 @@ export const cityList = [
     { name: "Tangerang", code: "TNG", province: "Banten" },
     { name: "Batam", code: "BTM", province: "Kepulauan Riau" },
     { name: "Pangkal Pinang", code: "PKP", province: "Bangka Belitung" },
-  ];
-  
+    { name: "Blitar", code: "BLT", province: "Jawa Timur" },
+    { name: "Bojonegoro", code: "BJN", province: "Jawa Timur" },
+    { name: "Jember", code: "JBR", province: "Jawa Timur" },
+    { name: "Lamongan", code: "LMG", province: "Jawa Timur" },
+    { name: "Madiun", code: "MDU", province: "Jawa Timur" },
+    { name: "Mojokerto", code: "MJK", province: "Jawa Timur" },
+    { name: "Pacitan", code: "PCT", province: "Jawa Timur" },
+    { name: "Pasuruan", code: "PSR", province: "Jawa Timur" },
+    { name: "Sidoarjo", code: "SDJ", province: "Jawa Timur" },
+    { name: "Tuban", code: "TBN", province: "Jawa Timur" },
+    { name: "Gresik", code: "GRS", province: "Jawa Timur" },
+  ].sort((a, b) => a.name.localeCompare(b.name));

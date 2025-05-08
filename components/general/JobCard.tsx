@@ -41,23 +41,16 @@ const JobCard = ({ job }: iAppProps) => {
             </div>
             <div>
               <h1 className="text-xl md:text-2xl font-bold">{job.jobTitle}</h1>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2 justify-between items-center">
                 <p className="text-sm text-muted-foreground">
                   {job.Company.name}
                 </p>
-                <span className="hidden md:inline text-muted-foreground">
-                  *
-                </span>
+                <span className="hidden md:inline w-1.5 h-1.5 bg-muted-foreground rounded-full" />
                 <Badge className="rounded-full" variant="secondary">
                   {job.employmentType}
                 </Badge>
-                <span className="hidden md:inline text-muted-foreground">
-                  *
-                </span>
+                <span className="hidden md:inline w-1.5 h-1.5 bg-muted-foreground rounded-full" />
                 <Badge className="rounded-full">{job.location}</Badge>
-                <span className="hidden md:inline text-muted-foreground">
-                  *
-                </span>
               </div>
               <div>
                 <p className="text-sm">
