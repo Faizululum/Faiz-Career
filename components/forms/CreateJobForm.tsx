@@ -46,7 +46,7 @@ const CreateJobForm = ({ companyLocation, companyName, companyAbout, companyLogo
       employmentType: "",
       jobDescription: "",
       jobTitle: "",
-      listingDuration: 7,
+      listingDuration: 30,
       location: "",
       salaryFrom: 0,
       salaryTo: 0,

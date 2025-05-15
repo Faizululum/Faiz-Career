@@ -15,7 +15,12 @@ export const helloWorld = inngest.createFunction(
 );
 
 export const handleJobExpiration = inngest.createFunction(
-  {id: "job-expiration"},
+  {id: "job-expiration", cancelOn: [
+    {
+      event: "job/cancel.expiration",
+      if: "event.data.jobId == async.data.jobId",
+    },
+  ]},
   {event: "job/created"},
 
   async ({event, step}) => {
@@ -81,7 +86,7 @@ export const sendPeriodicJobListings = inngest.createFunction(
               <p style="margin: 5px 0;">${job.Company.name} • ${
                 job.location
               }</p>
-              <p style="margin: 5px 0;">$${job.salaryFrom.toLocaleString()} - $${job.salaryTo.toLocaleString()}</p>
+              <p style="margin: 5px 0;">Rp ${job.salaryFrom.toLocaleString()} - Rp ${job.salaryTo.toLocaleString()}</p>
             </div>
           `
             )
