@@ -212,6 +212,10 @@ const JobIdPage = async ({ params }: { params: Params }) => {
             </div>
             <div className="space-y-2">
               <div className="flex justify-between">
+                <span className="text-sm text-muted-foreground">Location</span>
+                <Badge className="rounded-full">{data.location}</Badge>
+              </div>
+              <div className="flex justify-between">
                 <span className="text-sm text-muted-foreground">
                   Apply before
                 </span>
@@ -240,11 +244,9 @@ const JobIdPage = async ({ params }: { params: Params }) => {
                 <span className="text-sm text-muted-foreground">
                   Employment Type
                 </span>
-                <span className="text-sm">{data.employmentType}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-sm text-muted-foreground">Location</span>
-                <span className="text-sm">{data.location}</span>
+                <Badge className="rounded-full" variant="secondary">
+                  {data.employmentType}
+                </Badge>
               </div>
               <div className="flex justify-between">
                 <span className="text-sm text-muted-foreground">Salary</span>
