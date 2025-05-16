@@ -4,7 +4,7 @@ import JobCard from "./JobCard";
 import { MainPagination } from "./MainPagination";
 import { JobPostStatus } from "@prisma/client";
 
-async function getData({page = 1, pageSize = 4, jobTypes = []}: {page: number, pageSize: number, jobTypes: string[]}) {
+async function getData({page = 1, pageSize = 4, jobTypes = [], location = ""}: {page: number, pageSize: number, jobTypes: string[], location: string}) {
   const skip = (page - 1) * pageSize;
 
   const where = {
@@ -13,6 +13,9 @@ async function getData({page = 1, pageSize = 4, jobTypes = []}: {page: number, p
       employmentType: {
         in: jobTypes,
       },
+    }),
+    ...(location &&  location !== "Remote (On Demand)" && {
+      location: location
     })
   };
   
@@ -56,8 +59,8 @@ async function getData({page = 1, pageSize = 4, jobTypes = []}: {page: number, p
   }
 }
 
-const JobListings = async ({currentPage, jobTypes}: {currentPage: number, jobTypes: string[]}) => {
-  const { jobs, totalPages } = await getData({page: currentPage, pageSize: 4, jobTypes: jobTypes});
+const JobListings = async ({currentPage, jobTypes, location}: {currentPage: number, jobTypes: string[], location: string}) => {
+  const { jobs, totalPages } = await getData({page: currentPage, pageSize: 4, jobTypes: jobTypes, location: location});
   return (
     <>
       {jobs.length > 0 ? (
