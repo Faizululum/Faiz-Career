@@ -6,11 +6,13 @@ import { Suspense } from "react";
 type SearchParams = {
   searchParams: Promise<{
     page?: string;
+    jobTypes?: string;
   }>
 }
 
 export default async function Home({ searchParams }: SearchParams) {
   const params = await searchParams;
+  const jobTypes = params.jobTypes?.split(",") || [];
 
   const currentPage = Number(params.page) || 1;
   return (
@@ -18,7 +20,7 @@ export default async function Home({ searchParams }: SearchParams) {
       <JobFilter />
       <div className="col-span-2 flex flex-col gap-6">
         <Suspense fallback={<JobListingLoading />} key={currentPage}>
-          <JobListings currentPage={currentPage} />
+          <JobListings currentPage={currentPage} jobTypes={jobTypes} />
         </Suspense>
       </div>
     </div>
