@@ -19,6 +19,7 @@ export default function JobFilter() {
 
     // Get Current Filters from URL
     const currentJobTypes = searchParams.get("jobTypes")?.split(",") ?? [];
+    const currentLocation = searchParams.get("location") || "";
 
     function clearAllFilters() {
         router.push("/");
@@ -53,6 +54,10 @@ export default function JobFilter() {
         router.push(`?${createQueryString("jobTypes", newValue)}`);
     }
 
+    function handleLocationChange(location: string) {
+        router.push(`?${createQueryString("location", location)}`);
+    }
+
     return (
         <Card className="col-span-1 h-fit">
             <CardHeader className="flex flex-row justify-between items-center">
@@ -82,7 +87,9 @@ export default function JobFilter() {
 
                 <div className="space-y-4">
                     <Label className="text-lg font-semibold">Location</Label>
-                    <Select>
+                    <Select value={currentLocation} onValueChange={(location) => {
+                        handleLocationChange(location);
+                    }}>
                         <SelectTrigger>
                             <SelectValue placeholder="Select Location" />
                         </SelectTrigger>
